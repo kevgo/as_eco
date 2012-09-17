@@ -5,7 +5,7 @@ AsEco = require '../src/as_eco'
 # Simulate slow database operations.
 simulate_delay = (delay, result, done_callback) ->
   setTimeout (-> done_callback(result)), delay
-user_loader = new AsyncFuture simulate_delay, 1000, 'John Doe '
+user_loader = new AsyncFuture simulate_delay, 1000, 'John Doe'
 city_loader = new AsyncFuture simulate_delay, 2000, 'Los Angeles'
 
 
