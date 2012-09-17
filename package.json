@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "dependencies": {},
   "devDependencies": {
+    "async_future.coffee": "latest",
     "mocha": "latest",
     "coffee-script": "latest",
     "chai": "latest",

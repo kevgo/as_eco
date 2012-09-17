@@ -12,4 +12,3 @@
 <%async @city.get, city %>
 <f><%= city %></f>
 
-
