@@ -1,0 +1,28 @@
+{
+  "name": "as_eco",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "latest",
+    "coffee-script": "latest",
+    "chai": "latest",
+    "ruby.coffee": "latest",
+    "sinon": "latest",
+    "sinon-chai": "latest"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "author": "Kevin Goslar",
+  "description": "Asynchronous, streaming embedded CoffeeScript templating engine.",
+  "homepage": "https://github.com/kevgo/aseco",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kevgo/aseco.git"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --colors --reporter spec --compilers coffee:coffee-script"
+  },
+  "main": "src/aseco.coffee"
+}
