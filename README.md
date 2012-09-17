@@ -1,4 +1,4 @@
-#Asynchronous, streaming embedded CoffeeScript templates
+#Asynchronous, Streaming, Embedded CoffeeScript Templates <a href="http://travis-ci.org/#!/kevgo/as_eco" target="_blank"><img src="https://secure.travis-ci.org/kevgo/as_eco.png" alt="Build status"></a>
 
 AsEco does pretty much the same thing that [ECO templates](https://github.com/sstephenson/eco) templates do, with the following delicate differences:
 
