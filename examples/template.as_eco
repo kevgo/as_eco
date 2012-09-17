@@ -1,14 +1,15 @@
-<a>One</a>
-<b>Two</b>
+This part is sent immediately.
 
 <%async @user.get, user %>
-<c><%= user %></c>
+This part is sent as soon as the server receives the user information from its backend.
+<%= user %>
 
+While we wait for the city data to become available, 
+we can use CoffeeScript to define and massage data.
 <% a = 1 %>
 <%= a %>
-<d>Three</d>
-<e>Four</e>
 
 <%async @city.get, city %>
-<f><%= city %></f>
+This part is sent after the expensive backend operation to retrieve city data finishes.
+<%= city %>
 
