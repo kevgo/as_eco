@@ -1,0 +1,15 @@
+<a>One</a>
+<b>Two</b>
+
+<%async @user.get, user %>
+<c><%= user %></c>
+
+<% a = 1 %>
+<%= a %>
+<d>Three</d>
+<e>Four</e>
+
+<%async @city.get, city %>
+<f><%= city %></f>
+
+
