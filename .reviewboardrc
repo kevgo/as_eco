@@ -1,2 +1,2 @@
-REVIEWBOARD_URL = 'http://96.126.107.93'
+REVIEWBOARD_URL = 'http://reviews.dev.originate.com'
 REPOSITORY = 'ASECO'

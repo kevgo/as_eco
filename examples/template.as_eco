@@ -4,7 +4,7 @@ This part is sent immediately.
 This part is sent as soon as the server receives the user information from its backend.
 <%= user %>
 
-While we wait for the city data to become available, 
+While we wait for the city data to become available,
 we can use CoffeeScript to define and massage data.
 <% a = 1 + 1 %>
 <%= a %>
