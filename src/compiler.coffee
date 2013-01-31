@@ -1,4 +1,4 @@
-Builder = require './builder'
+StringBuilder = require 'string_builder.js'
 require 'ruby.coffee'
 IndentationCounter = require './indentation_counter'
 
@@ -7,7 +7,7 @@ IndentationCounter = require './indentation_counter'
 class Compiler
 
   constructor: (@name, @segments) ->
-    @builder = new Builder
+    @builder = new StringBuilder
     @callback_level = new IndentationCounter
     @segments_length = @segments.length
     @current_step = 0
@@ -27,7 +27,7 @@ class Compiler
     while @current_step < @segments_length
       segment = @next_segment()
       this["compile_#{segment.type}"](segment.data)
- 
+
     # We are done compiling the segments --> call 'done()'.
     @builder.append "#{@spaces()}done()\n"
 

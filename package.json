@@ -1,15 +1,16 @@
 {
   "name": "as_eco",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "dependencies": {},
   "devDependencies": {
     "async_future.coffee": "latest",
-    "mocha": "latest",
-    "coffee-script": "latest",
     "chai": "latest",
+    "coffee-script": "latest",
+    "mocha": "latest",
     "ruby.coffee": "latest",
     "sinon": "latest",
-    "sinon-chai": "latest"
+    "sinon-chai": "latest",
+    "string_builder.js": "latest"
   },
   "optionalDependencies": {},
   "engines": {
