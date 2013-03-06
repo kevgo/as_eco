@@ -1,4 +1,4 @@
-sinon = require('./test_helper').sinon
+[expect, sinon, chai] = require './test_helper'
 as_eco = require '../src/as_eco'
 
 
@@ -11,7 +11,7 @@ describe 'as_eco', ->
   describe 'compile', ->
     it 'converts the template into a function and stores it in @render_functions', ->
       as_eco.compile 'foo', 'bar'
-      as_eco.render_functions.should.have.property 'foo'
+      expect(as_eco.render_functions).to.have.property 'foo'
 
 
   describe 'logging', ->
@@ -20,26 +20,26 @@ describe 'as_eco', ->
 
     describe 'default behavior', ->
       it 'does not log', ->
-        as_eco.logging.should.be.false
+        expect(as_eco.logging).to.be.false
 
     describe 'when activated', ->
       it 'logs the compiled function on the console', ->
         as_eco.logging = true
         as_eco.compile 'foo', 'bar'
-        console.log.should.have.been.called
+        expect(console.log).to.have.been.called
 
     describe 'when deactivated', ->
       it 'does not log the compiled function on the console', ->
         as_eco.logging = false
         as_eco.compile 'foo', 'bar'
-        console.log.should.not.have.been.called
+        expect(console.log).to.not.have.been.called
 
 
   describe 'compile_file', ->
 
     it 'compiles the given file', (done) ->
       as_eco.compile_file './test/aseco_test.as_eco', ->
-        as_eco.render_functions.should.have.property './test/aseco_test.as_eco'
+        expect(as_eco.render_functions).to.have.property './test/aseco_test.as_eco'
         done()
 
 
@@ -47,25 +47,25 @@ describe 'as_eco', ->
 
     it 'returns true if the given template is already compiled', ->
       as_eco.render_functions['foo'] = 'bar'
-      as_eco.has_compiled_template('foo').should.be.true
+      expect(as_eco.has_compiled_template('foo')).to.be.true
 
     it 'returns false if the given template is not compiled yet', ->
-      as_eco.has_compiled_template('foo').should.be.false
+      expect(as_eco.has_compiled_template('foo')).to.be.false
 
 
   describe 'escape', ->
 
     it 'escapes html tags', ->
-      as_eco.escape('<script>').should.equal '&lt;script&gt;'
+      expect(as_eco.escape('<script>')).to.equal '&lt;script&gt;'
 
     it 'escapes ampersands', ->
-      as_eco.escape('foo & bar').should.equal 'foo &amp; bar'
+      expect(as_eco.escape('foo & bar')).to.equal 'foo &amp; bar'
 
     it 'escapes double-quotes', ->
-      as_eco.escape('"').should.equal '&quot;'
+      expect(as_eco.escape('"')).to.equal '&quot;'
 
     it 'converts non-string parameters to string first', ->
-      as_eco.escape(5).should.equal '5'
+      expect(as_eco.escape(5)).to.equal '5'
 
 
   describe 'render', ->
@@ -74,29 +74,29 @@ describe 'as_eco', ->
     outstream = (text) -> result += text
     beforeEach ->
       result = ''
-    
+
     it 'renders static text through the given output stream', (done) ->
       as_eco.compile 'foo', 'text'
       as_eco.render 'foo', null, outstream, ->
-        result.should.eql 'text'
+        expect(result).to.eql 'text'
         done()
 
     it 'renders javascript into the output stream', (done) ->
       as_eco.compile 'foo', '<% a = 5 %><%= a %>'
       as_eco.render 'foo', null, outstream, ->
-        result.should.eql '5'
+        expect(result).to.eql '5'
         done()
 
     it 'renders data into the template', (done) ->
       as_eco.compile 'foo', '<%= @a %>'
       as_eco.render 'foo', { a: 5 }, outstream, ->
-        result.should.eql '5'
+        expect(result).to.eql '5'
         done()
 
     it 'HTML-escapes data inserted into the template', (done) ->
       as_eco.compile 'foo', '<%= @a %>'
       as_eco.render 'foo', { a: '<script>' }, outstream, ->
-        result.should.eql '&lt;script&gt;'
+        expect(result).to.eql '&lt;script&gt;'
         done()
 
 
@@ -105,7 +105,7 @@ describe 'as_eco', ->
       it 'works on a single level', ->
         as_eco.compile 'foo', '<%async @user_future.get, user %><%= user %>'
         as_eco.render 'foo', { user_future: { get: -> 5 }}, outstream, ->
-          result.should.eql '5'
+          expect(result).to.eql '5'
           done()
 
       it 'works on multiple levels', ->
@@ -113,7 +113,7 @@ describe 'as_eco', ->
         user_future = { get: -> 5 }
         city_future = { get: -> 6 }
         as_eco.render 'foo', { user_future: user_future, city_future: city_future }, outstream, ->
-          result.should.eql '6'
+          expect(result).to.eql '6'
           done()
 
 
@@ -125,7 +125,7 @@ describe 'as_eco', ->
                       <% end %>"""
         as_eco.compile 'foo', template
         as_eco.render 'foo', { a: true }, outstream, ->
-          result.trim().should.equal 'yes!'
+          expect(result.trim()).to.equal 'yes!'
           done()
 
       it 'renders the unhappy path if the clause is falsy', (done) ->
@@ -135,7 +135,7 @@ describe 'as_eco', ->
                                    no!
                                  <% end %>"""
         as_eco.render 'foo', { a: false }, outstream, ->
-          result.trim().should.equal 'no!'
+          expect(result.trim()).to.equal 'no!'
           done()
 
 
@@ -146,7 +146,7 @@ describe 'as_eco', ->
                                    i: <%= i %>
                                  <% end %>"""
         as_eco.render 'foo', {}, outstream, ->
-          result.should.match /i: 1\s*i: 2/
+          expect(result).to.match /i: 1\s*i: 2/
           done()
 
 
@@ -157,16 +157,16 @@ describe 'as_eco', ->
       it 'does not compile the template again', (done) ->
         sinon.spy as_eco, 'compile_file'
         as_eco.render_functions['foo'] = ->
-          as_eco.compile_file.should.not.have.been.called
+          expect(as_eco.compile_file).to.not.have.been.called
           as_eco.compile_file.restore()
           done()
         as_eco.render_file 'foo', {}, 'out', 'done'
 
       it 'renders the template', (done) ->
         as_eco.render_functions['foo'] = (out, done_cb) ->
-          this.should.eql {data: 1}
-          out.should.equal 'out'
-          done_cb.should.equal 'done'
+          expect(this).to.eql {data: 1}
+          expect(out).to.equal 'out'
+          expect(done_cb).to.equal 'done'
           done()
         as_eco.render_file 'foo', {data: 1}, 'out', 'done'
 
@@ -175,14 +175,14 @@ describe 'as_eco', ->
       it 'compiles the template', (done) ->
         out = ->
         as_eco.render_file './test/aseco_test.as_eco', {}, out, ->
-          as_eco.render_functions.should.have.property './test/aseco_test.as_eco'
+          expect(as_eco.render_functions).to.have.property './test/aseco_test.as_eco'
           done()
 
       it 'renders the template', (done) ->
         sinon.spy as_eco, 'render'
         out = sinon.spy()
         as_eco.render_file './test/aseco_test.as_eco', {}, out, ->
-          out.should.have.been.called
+          expect(out).to.have.been.called
           done()
 
 
@@ -190,7 +190,7 @@ describe 'as_eco', ->
     it 'removes all compiled render functions', ->
       as_eco.render_functions['foo'] = 'bar'
       as_eco.reset()
-      as_eco.render_functions.should.eql {}
+      expect(as_eco.render_functions).to.eql {}
 
 
   describe 'with_logging', ->
@@ -199,21 +199,21 @@ describe 'as_eco', ->
       called = false
       as_eco.with_logging ->
         called = true
-      called.should.be.true
+      expect(called).to.be.true
 
 
     it 'runs the given function with logging enabled', ->
       as_eco.logging = false
       as_eco.with_logging ->
-        as_eco.logging.should.be.true
+        expect(as_eco.logging).to.be.true
 
 
     it 'restores the logging to false if it was false before', ->
       as_eco.logging = false
       as_eco.with_logging ->
-      as_eco.logging.should.be.false
+      expect(as_eco.logging).to.be.false
 
     it 'leaves the logging enabled if it was enabled before', ->
       as_eco.logging = true
       as_eco.with_logging ->
-      as_eco.logging.should.be.true
+      expect(as_eco.logging).to.be.true

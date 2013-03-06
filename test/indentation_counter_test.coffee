@@ -1,6 +1,5 @@
-test_helper = require('./test_helper')
-sinon = test_helper.sinon
-expect = test_helper.expect
+[expect, sinon, chai] = require './test_helper'
+
 
 IndentationCounter = require '../src/indentation_counter'
 
@@ -16,23 +15,23 @@ describe 'IndentationCounter', ->
   describe 'constructor', ->
 
     it 'initializes with 0 indentation', ->
-      indentation_counter.indentation_level().should.equal 0
+      expect(indentation_counter.indentation_level()).to.equal 0
 
 
   describe 'indent', ->
 
     it 'increases the indentation by the given amount', ->
       indentation_counter.indent 2
-      indentation_counter.indentation_level().should.equal 2
+      expect(indentation_counter.indentation_level()).to.equal 2
 
     it 'defaults to an increase of 1 units', ->
       indentation_counter.indent()
-      indentation_counter.indentation_level().should.equal 1
+      expect(indentation_counter.indentation_level()).to.equal 1
 
     it 'accumulates the indentation', ->
       indentation_counter.indent 2
       indentation_counter.indent 4
-      indentation_counter.indentation_level().should.equal 6
+      expect(indentation_counter.indentation_level()).to.equal 6
 
 
   describe 'undent', ->
@@ -40,9 +39,9 @@ describe 'IndentationCounter', ->
     it 'removes the indentation by the last given step', ->
       indentation_counter.indent 2
       indentation_counter.indent 4
-      indentation_counter.indentation_level().should.equal 6
+      expect(indentation_counter.indentation_level()).to.equal 6
       indentation_counter.undent()
-      indentation_counter.indentation_level().should.equal 2
+      expect(indentation_counter.indentation_level()).to.equal 2
 
 
     it 'throws an exception if there is nothing to undent', ->
